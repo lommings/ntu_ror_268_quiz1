@@ -34,9 +34,38 @@ str1和str2均為字串，第一個方法是用加號連結字串，第二個方
   ```ruby
   ((1 > 3)&&(true == true))||(!!!false)
   ```
-  會執行出什麼結果？ 請試試不用 irb 算出結果
+  會執行出什麼結果？ 請試試不用 irb 算出結果  
+true
 
 9. 請問 binding.pry 是什麼？ 要如何使用它？
+binding.pry 做的是 Runtime invocation。也就是可以在執行時攔截呼叫。這樣講你可能沒有感覺。
+
+真正厲害的用途是： 例如搭配 Rails 使用，在程式碼裡面插入 binding.pry。打開 rails s
+
+ class CourseController < ApplcationController
+  def show
+    @course = Course.find(params[:id])
+    binding.pry
+  end
+當 browser 打開 http://localhost:3000/courses/30，pry 會自動攔下 request，跳出 console 供開發者 debug 。
+
+From: /Users/xdite/Dropbox/projects/mentorhub/app/controllers/courses_controller.rb @ line 20 CoursesController#show:
+
+    20: def show
+    21:   @course = Course.find(params[:id])
+ => 22:   binding.pry
+    23: end
+開發者可以在 console 直接就拉出 @course 這個 object 出來看
+
+[1] pry(#<CoursesController>)> @course
+=> #<Course id: 30, name: "voluptas", user_id: 1, course_topic_id: 2, plan: "Laboriosam labore soluta debitis excepturi consequa...", hourly_rate: 822, location: "Taipei", course_type: nil, created_at: "2012-08-12 09:41:21", updated_at: "2012-08-12 09:41:21", video_link: nil, video_link_html: nil>
+也可以繼續追下去看裡面的東西
+
+[2] pry(#<CoursesController>)> cd @course
+[3] pry(#<Course>):1> plan
+=> "Laboriosam labore soluta debitis excepturi consequatur et eos et et praesentium doloremque. qui debitis ab est rerum aut velit fuga ut nemo omnis eum praesentium voluptatem ut. eum fugit rerum fuga error architecto quod nesciunt assumenda in. dicta "
+binding.pry 可以 Runtime 攔截呼叫物件，這讓開發者在寫一些複雜 Library 或者是 API 交涉資訊時，頓時就變得如虎添翼。因為每次在解決這類需求時，狀況都很像被綁黑布蒙著眼開發，最討厭的就是每次還要不斷的執行「印出」 debug，效率低落的驚人。
+
 
 10. 下面的一段程式碼，請嘗試用其他方法把 if...else...end 簡化成一行
 
