@@ -21,7 +21,9 @@ str1和str2均為字串，第一個方法是用加號連結字串，第二個方
 4. 請用一行程式碼從 [1, "a string", 3.14, [1,2,3,4]] 這個陣列找出所有非字串的值
 
 5. 請用一行程式碼把一個內容為整數 1 到 100 的陣列裡所有的值加上 2
-
+ ```ruby
+  a.map{|item| item+2}
+  ```
 6. 請寫出以下兩行程式碼迴傳的值，並解釋他們呼叫的方法差別為何：
   ```ruby
   [1, 2, 3, 3].uniq
@@ -37,10 +39,9 @@ str1和str2均為字串，第一個方法是用加號連結字串，第二個方
   會執行出什麼結果？ 請試試不用 irb 算出結果  
 true
 
-9. 請問 binding.pry 是什麼？ 要如何使用它？
-binding.pry 做的是 Runtime invocation。也就是可以在執行時攔截呼叫。這樣講你可能沒有感覺。
-
-真正厲害的用途是： 例如搭配 Rails 使用，在程式碼裡面插入 binding.pry。打開 rails s
+9. 請問 binding.pry 是什麼？ 要如何使用它？  
+binding.pry 做的是 Runtime invocation。也就是可以在執行時攔截呼叫。搭配 Rails 使用，在程式碼裡面插入 binding.pry。
+打開 rails s
 
  class CourseController < ApplcationController
   def show
@@ -56,14 +57,7 @@ From: /Users/xdite/Dropbox/projects/mentorhub/app/controllers/courses_controller
  => 22:   binding.pry
     23: end
 開發者可以在 console 直接就拉出 @course 這個 object 出來看
-
-[1] pry(#<CoursesController>)> @course
-=> #<Course id: 30, name: "voluptas", user_id: 1, course_topic_id: 2, plan: "Laboriosam labore soluta debitis excepturi consequa...", hourly_rate: 822, location: "Taipei", course_type: nil, created_at: "2012-08-12 09:41:21", updated_at: "2012-08-12 09:41:21", video_link: nil, video_link_html: nil>
-也可以繼續追下去看裡面的東西
-
-[2] pry(#<CoursesController>)> cd @course
-[3] pry(#<Course>):1> plan
-=> "Laboriosam labore soluta debitis excepturi consequatur et eos et et praesentium doloremque. qui debitis ab est rerum aut velit fuga ut nemo omnis eum praesentium voluptatem ut. eum fugit rerum fuga error architecto quod nesciunt assumenda in. dicta "
+也可以繼續追下去看裡面的東西。
 binding.pry 可以 Runtime 攔截呼叫物件，這讓開發者在寫一些複雜 Library 或者是 API 交涉資訊時，頓時就變得如虎添翼。因為每次在解決這類需求時，狀況都很像被綁黑布蒙著眼開發，最討厭的就是每次還要不斷的執行「印出」 debug，效率低落的驚人。
 
 
